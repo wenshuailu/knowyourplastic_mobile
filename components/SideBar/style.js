@@ -25,6 +25,11 @@ export default {
     fontSize: 16,
     marginLeft: 20
   },
+  hearderText: {
+    fontWeight: Platform.OS === "ios" ? "500" : "400",
+    fontSize: 16,
+    padding: 10,
+  },
   badgeText: {
     fontSize: Platform.OS === "ios" ? 13 : 11,
     fontWeight: "400",

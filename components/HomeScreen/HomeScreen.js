@@ -1,11 +1,11 @@
 import React from "react";
-import { StatusBar } from "react-native";
+import { StatusBar, Image, View } from "react-native";
 import { Container, Header, Title, Left, Icon, Right, Button, Body, Content,Text, Card, CardItem } from "native-base";
 export default class HomeScreen extends React.Component {
   render() {
     return (
       <Container>
-        <Header>
+        {/* <Header>
           <Left>
             <Button
               transparent
@@ -17,15 +17,28 @@ export default class HomeScreen extends React.Component {
             <Title>HomeScreen</Title>
           </Body>
           <Right />
-        </Header>
+        </Header> */}
         <Content padder>
-          <Card>
+          {/* <Card>
             <CardItem>
-              <Body>
-                <Text>Chat App to talk some awesome people!</Text>
-              </Body>
-            </CardItem>
-          </Card>
+              {/* <Body>
+                <Text h2>Know Your Plastic</Text>
+              </Body> */}
+          <View style={{flex: 1, padding:1}}>
+          <Image
+            source={require('../../assets/testcover.png')}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              flex: 1,
+              aspectRatio: 1.4, 
+              resizeMode: 'contain',
+              flexGrow: 1,
+            }}>
+          </Image>
+          </View>
+            {/* </CardItem>
+          </Card> */}
           <Button full rounded dark
             style={{ marginTop: 10 }}
             onPress={() => this.props.navigation.navigate("Camera")}>
@@ -35,6 +48,11 @@ export default class HomeScreen extends React.Component {
             style={{ marginTop: 10 }}
             onPress={() => this.props.navigation.navigate("Profile")}>
             <Text>Goto Profiles</Text>
+          </Button>
+          <Button full rounded primary
+            style={{ marginTop: 10 }}
+            onPress={() => this.props.navigation.navigate("Resource")}>
+            <Text>Resource on Plastic</Text>
           </Button>
         </Content>
       </Container>

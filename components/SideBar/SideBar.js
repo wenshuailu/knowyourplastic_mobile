@@ -15,7 +15,13 @@ import {
   Badge
 } from "native-base";
 import styles from "./style";
-const routes = [{key: "Home", name:"Home", route:"Home"},{key: "Camera", name:"Camera", route:"Camera"}, {key: "Profile", name:"Profile", route:"Profile"}];
+const routes = [
+  {key: "Home", name:"Home", route:"Home"},
+  {key: "Camera", name:"Camera", route:"Camera"},
+  {key: "Profile", name:"Profile", route:"Profile"},
+  {key: "Resource", name:"Resource", route:"Resource"}];
+
+const coverPage = require('../../assets/coverpage.png')
 export default class SideBar extends React.Component {
   constructor(props) {
     super(props);
@@ -29,19 +35,23 @@ export default class SideBar extends React.Component {
       <Container>
         <Content
         bounces={false}
-        style={{ flex: 1, backgroundColor: "#fff", top: -1 }}
+        style={{ flex: 1, backgroundColor: "#fff", top: -1, left: -5 }}
         >
           {/* <Image
-            source={{
-              uri: "https://github.com/GeekyAnts/NativeBase-KitchenSink/raw/react-navigation/img/drawer-cover.png"
-            }}
+            source={require('../../assets/testcover.png')}
             style={{
+              flex: 1,
+              resizeMode: 'contain',
               height: 120,
-              alignSelf: "stretch",
-              justifyContent: "center",
-              alignItems: "center"
+              // alignSelf: "stretch",
+              // justifyContent: "center",
+              // alignItems: ""
             }}>
           </Image> */}
+          <Right style={styles.hearderText}>
+            <Text>Menu</Text>
+          </Right>
+
  <List
             dataArray={routes}
             renderRow={data =>

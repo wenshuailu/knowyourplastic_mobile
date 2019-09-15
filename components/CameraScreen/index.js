@@ -11,7 +11,7 @@ import {
 import {AppConfig} from "../../config"
 
 
-import {Text, ListItem} from 'native-base';
+import {Text, ListItem, List} from 'native-base';
 
 import * as Permissions from 'expo-permissions';
 
@@ -19,6 +19,26 @@ import * as ImagePicker from 'expo-image-picker';
 import * as ImageManipulator from 'expo-image-manipulator';
 import {ApiService} from "../../api";
 
+const testtext = 'testtxt';
+const pvc = require('../../assets/pvc.png');
+
+const PETE = require('../../assets/pete.png');
+const PVC = require('../../assets/pvc.png');
+const HDPE = require('../../assets/hdpe.png');
+const PP = require('../../assets/pp.png');
+const LDPE = require('../../assets/ldpe.png');
+const PS = require('../../assets/ps.png');
+const Others = require('../../assets/other.png');
+
+const img_data = {
+    PETE,
+    HDPE,
+    PVC,
+    LDPE,
+    PP,
+    PS,
+    Others,
+}
 
 export default class HomeScreen extends React.Component {
     static navigationOptions = {
@@ -45,17 +65,22 @@ export default class HomeScreen extends React.Component {
                     <View style={styles.actionsContainer}>
 
                         <View style={styles.callToActionContainer}>
-                            <Button
-                                title='camera-alt' raised onPress={this._pickImageFromCamera}/>
+                            <View style={{flex:0.5 , marginRight:10}}>
+                            <Button 
+                                title='Camera' raised onPress={this._pickImageFromCamera} />
+                            </View>
 
-                            <Button
-                                title='image' raised onPress={this._pickImageFromLibrary}/>
+                            <View style={{flex: 0.5}}>
+                            <Button 
+                                title='Local Image' raised onPress={this._pickImageFromLibrary} />
+                            </View>
+
                         </View>
 
                     </View>
 
                     <View style={styles.imageContainer}>
-                        <Image source={this.state.image} style={{height: 200, width: 200}}/>
+                        <Image source={this.state.image} style={{ height: 200, width: 200 }} />
 
                     </View>
 
@@ -64,24 +89,27 @@ export default class HomeScreen extends React.Component {
                         {this.renderPredictions()}
                     </View>
                 </View>
-
             </ScrollView>
-        );
-    }
-
-
+                );
+            }
+        
+        
     renderPredictions() {
 
         if (this.state.loading) {
-            return <ActivityIndicator size="large" color="#0000ff"/>
-        } else if (this.state.predictionData) {
-            let {class: predictedClass, predictions} = this.state.predictionData;
-            predictions = predictions.sort((a, b) => b.loss - a.loss).slice(0, 3);
-            console.log('results: ')
-            console.log(predictions)
-            return (
+            return <ActivityIndicator size="large" color="#0000ff" />
+                } else if (this.state.predictionData) {
+                    let {class: predictedClass, predictions} = this.state.predictionData;
+                predictions = predictions.sort((a, b) => b.loss - a.loss).slice(0, 3);
+                console.log('results: ')
+                console.log(predictions)
+                console.log(predictions[0])
+                console.log(predictions[0]['class'])
+                const {carbon_footprint, description, full_name, p_type, hazard, recycability} = predictions[0];
+                const img = img_data[p_type]; 
+                return (
                 <View style={styles.predictionsContentContainer}>
-                    <Text h3>Predictions</Text>
+                    {/* <Text h3>Predictions</Text>
                     <List>
                         {
                             predictions.map((item, index) => (
@@ -92,8 +120,97 @@ export default class HomeScreen extends React.Component {
                                 />
                             ))
                         }
-                    </List>
+                    </List> */}
+                     <Text h3>Plastic Product: {predictions[0]['class']}</Text>
+                        <View style={{
+                            flex: 1,
+                            // backgroundColor: 'red',
+                            flexDirection: 'row',
+                            padding: 10,
+                        }}>
+                            <View  style={{
+                            flex: 0.5,
+                            }}>
+                                <Image
+                                // style={{width: 50, height: 50}}
+                                source={img}
+                            />
+                            </View>
+                            <View  style={{
+                            flex: 0.5,
+                            }}>
+                                <Text>{full_name}</Text>
+                            </View>
 
+                        </View>
+                        <View style={{
+                            flex: 1,
+                            // backgroundColor: 'red',
+                            flexDirection: 'row',
+                            padding: 10,
+                        }}>
+                            <View  style={{
+                            flex: 0.5,
+                            }}>
+                                <Text>Carbon Footprint:</Text>
+                            </View>
+                            <View  style={{
+                            flex: 0.5,
+                            }}>
+                                <Text>{carbon_footprint}</Text>
+                            </View>
+                        </View>
+                        <View style={{
+                            flex: 1,
+                            // backgroundColor: 'red',
+                            flexDirection: 'row',
+                            padding: 10,
+                        }}>
+                            <View  style={{
+                            flex: 0.5,
+                            }}>
+                                <Text>Description: </Text>
+                            </View>
+                            <View  style={{
+                            flex: 0.5,
+                            }}>
+                                <Text>{description}</Text>
+                            </View>
+                        </View>
+                        <View style={{
+                            flex: 1,
+                            // backgroundColor: 'red',
+                            flexDirection: 'row',
+                            padding: 10,
+                        }}>
+                            <View  style={{
+                            flex: 0.5,
+                            }}>
+                                <Text>Recycability: </Text>
+                            </View>
+                            <View  style={{
+                            flex: 0.5,
+                            }}>
+                                <Text>{recycability}</Text>
+                            </View>
+                        </View>
+                        <View style={{
+                            flex: 1,
+                            // backgroundColor: 'red',
+                            flexDirection: 'row',
+                            padding: 10,
+                        }}>
+                            <View  style={{
+                            flex: 0.5,
+                            }}>
+                                <Text>Hazard: </Text>
+                            </View>
+                            <View  style={{
+                            flex: 0.5,
+                            }}>
+                                <Text>{hazard}</Text>
+                            </View>
+                        </View>
                 </View>
             )
         } else {

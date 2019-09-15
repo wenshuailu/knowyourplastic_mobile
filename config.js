@@ -1,6 +1,6 @@
 export const AppConfig = 
 
 {
-    title : "What Food Is It?",
-    host : "https://plastic-img-classifier.herokuapp.com"
+    title : "What Plastic Is It?",
+    host : "https://plastic-image-classifier.herokuapp.com/"
 };
